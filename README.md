@@ -9,7 +9,12 @@ A aplicação colhe os jogos e tempo de jogo no perfil designado, através da St
  1. Rode o arquivo db.py;
  2. No arquivo main.py, insira a sua própria **STEAM API KEY** e o seu **ID de usuário** (não é o nickname);
  3. Rode o arquivo main.py
-    
+
+## O que há de novo? 
+- Insira seu link de perfil STEAM ou STEAMID diretamente no terminal ao invés de inserir no código fonte;
+- Reestruturação das funções para maior clareza;
+- Opção de escanear o perfil STEAM ou selecionar diretamente do banco de dados;
+
 ## O que vem por aí:
 - Inserção manual de jogos (para games não STEAM);
 - Adição de gênero do jogo;
