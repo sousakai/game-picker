@@ -1,0 +1,18 @@
+Licença de Uso - Game Picker
+Copyright (c) 2025 Kayke Sousa
+
+Termos de Uso:
+Uso Pessoal: Você tem permissão para usar o software Game Picker para fins pessoais e não comerciais, desde que respeite os termos desta licença.
+
+Modificação do Código: Você não está autorizado a modificar o código fonte, distribuí-lo ou criar obras derivadas sem a minha permissão explícita. Qualquer modificação que você deseje fazer deverá ser previamente acordada comigo.
+
+Distribuição: Você pode distribuir o software, desde que o distribua na forma original, sem modificações, e incluindo esta licença de uso.
+
+Proibição de Uso Comercial: Você não pode usar o software para fins comerciais sem a minha permissão explícita.
+
+Garantias: Este software é fornecido "como está", sem garantias de qualquer tipo, seja expressa ou implícita, incluindo, mas não se limitando a, garantias de adequação a um fim específico.
+
+Responsabilidade: Eu, como autor do Game Picker, não me responsabilizo por quaisquer danos causados pelo uso ou pela distribuição deste software.
+
+Licença Não Transferível: A licença fornecida não pode ser transferida ou sublicenciada a terceiros.
+
