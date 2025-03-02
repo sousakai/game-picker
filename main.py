@@ -1,87 +1,54 @@
-import requests
+from steamAPI import * 
 import sqlite3
-import random
-from db import inserir_jogo
 
-STEAM_ID = ''
-STEAM_API_KEY = ''
 
-def obter_nome_jogo(appid):
-    url_nome_jogo = f"https://store.steampowered.com/api/appdetails?appids={appid}" 
-    # utilizamos a API de detalhes para obter o nome do jogo pelo appid
-
-    resposta = requests.get(url_nome_jogo)
+def verificar_banco_vazio():
+    conn = sqlite3.connect('info_jogos.db')  # conexão bd
+    cursor = conn.cursor()  #cursor bd
     
-    if resposta.status_code == 200:
-        dados = resposta.json()
-        
-        if str(appid) in dados: #converte para string o appid, pois os dados provenientes da API são strings
-            nome_jogo = dados[str(appid)].get("data", {}).get("name", None) 
-            # converte appid para string, e usa isso para buscar os dados relacionados. dentro da chave data, busca o dado "name", que é o nome do jogo
+    cursor.execute('SELECT COUNT(*) FROM info_jogos')  # Conta o número de registros na tabela
+    resultado = cursor.fetchone()  # Obtém o resultado da contagem
+    
+    conn.close()  # Fecha a conexão com o banco
+    
+    if resultado[0] == 0:  # se o número de registros for 0, o banco está vazio
+        return True
+    else:
+        return False
+def main():
+  
+    verificar_conta = input("Você deseja verificar sua conta Steam? (s/n)\n").lower().strip()
+
+    jogo_aleatorio = None  # inicializa como none para que ela sempre seja definida e não dê erro
+
+    if verificar_conta == 's':  # Verifica se o usuário deseja verificar a conta Steam
+        input_usuario = input("Digite seu link do perfil STEAM ou STEAMID:\n")
+        STEAM_ID = obter_steamID(input_usuario)
+
+        if STEAM_ID:  # verifica se o steamid foi obtido com sucesso
+            print(f"User: {input_usuario} ID: {STEAM_ID}")
+            obter_jogos_steam(STEAM_ID)  
+            jogo_aleatorio = escolher_jogo() 
             
-            return nome_jogo
-        else:
-            return None
+        else:  # se não conseguir obter o SteamID
+            print("Não foi possível obter o SteamID. Selecionando um jogo aleatório do banco de dados...")
+            jogo_aleatorio = escolher_jogo() 
+
+    else:  # caso o usuário não queira verificar a conta Steam:
+        if verificar_banco_vazio():
+            print("O banco de dados está vazio. Não é possível escolher um jogo aleatório.")
+            return  # Sai da função se o banco estiver vazio
+        jogo_aleatorio = escolher_jogo() 
+
+    # Exibe o jogo aleatório, caso exista
+    if jogo_aleatorio:
+        print(f"Seu jogo aleatório é: {jogo_aleatorio[2]}, com {jogo_aleatorio[3]} horas jogadas.")
     else:
-        return None
+        print("Nenhum jogo encontrado no banco de dados.")
 
-def obter_jogos_steam():
-    conn = sqlite3.connect('info_jogos.db')  # conecta com o banco de dados
-    cursor = conn.cursor()  # cria cursor para sql
-    
-    url = f"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={STEAM_API_KEY}&steamid={STEAM_ID}&format=json"
-
-    resposta = requests.get(url)
-    
-    if resposta.status_code == 200:
-        dados = resposta.json()
-
-        
-        print("Estrutura completa da resposta da API:", dados)  # exibe a estrutura para debug
-
-        jogos = dados.get("response", {}).get("games", [])  # usa o response (chave inicial do json de resposta), e busca os games dentro dele
-
-        # verifica se tem jogos no perfil
-        if jogos:  
-            print(f"Quantidade de jogos encontrados: {len(jogos)}")
-            for jogo in jogos:
-                
-                # print("Estrutura do jogo:", jogo)  # exibe a estrutura dos dados coletados por jogo para debug
-
-                appid = jogo.get("appid")
-                nome_jogo = obter_nome_jogo(appid)  # busca o nome do jogo com a função anterior
-                horas_jogadas = jogo.get("playtime_forever") / 60  # converte minutos para horas
-                
-                # verifica erros ao colher o nome do jogo
-                if nome_jogo is None:
-                    print(f"Erro ao obter nome do jogo para AppID {appid}")
-                else:
-                    print(f"Nome do Jogo: {nome_jogo}, AppID: {appid}, Horas Jogadas: {horas_jogadas}")  # exibe dados coletados
-
-                # Inserindo os dados no banco se o nome do jogo não for nulo (com erro)
-                if nome_jogo is not None: 
-                    inserir_jogo(nome_jogo, horas_jogadas, appid)
-        else:
-            print("Nenhum jogo encontrado no perfil.")
-        
-        conn.commit()  # Commit das alterações no banco de dados
-    else:
-        print("Erro ao obter dados da API")
-
-#obter_jogos_steam()
-
-def escolher_jogo():
-    conn = sqlite3.connect('info_jogos.db')
-    cursor = conn.cursor()
-    
-    cursor.execute('SELECT * FROM info_jogos')
-    jogos = cursor.fetchall()
-    
-    jogo_aleatorio = random.choice(jogos)
-    return jogo_aleatorio
-
-jogo_aleatorio = escolher_jogo()  # chama a função e guarda o return na variável
+# Chama a função main para rodar o script
+main()
 
 
 
-print(f"Seu jogo aleatório é: {jogo_aleatorio[2]}, com {jogo_aleatorio[3]} horas jogadas." )  # exibe o jogo na posição 1 da tupla (nome)s
+

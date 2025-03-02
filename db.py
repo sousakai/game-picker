@@ -44,11 +44,15 @@ def excluir_tabela():
     conn.commit()  # Confirma a transação
     print("Tabela excluída com sucesso.")
     
+    
 
-def main():  # Testes aqui
+
+## TESTES / UTILIDADES PARA O BD
+
+#def main():
     #excluir_tabela()  # Exclui a tabela para rodar o código tranquilo, sem criar várias iterações do mesmo game
-    criar_tabela()  
-    listar_jogos()  
+    #criar_tabela()  
+    #listar_jogos()  
 
     
     ## teste do codigo: 
@@ -56,4 +60,4 @@ def main():  # Testes aqui
     # inserir_jogo('Mass Effect', 5.0, 123)  # Feito para testar a verificação de jogo existente
 
 
-main()
+#main()
