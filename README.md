@@ -7,14 +7,14 @@ A aplicação colhe os jogos e tempo de jogo no perfil designado, através da St
 
 ## Como utilizar?
  1. Rode o arquivo db.py;
- 2. No arquivo main.py, insira a sua própria STEAM API KEY e o seu ID de usuário;
+ 2. No arquivo main.py, insira a sua própria **STEAM API KEY** e o seu **ID de usuário** (não é o nickname);
  3. Rode o arquivo main.py
-
+    
 ## O que vem por aí:
 - Inserção manual de jogos (para games não STEAM);
 - Adição de gênero do jogo;
-- Utilização sem necessidade de criar uam STEAM API KEY por usuário;
-- Possível integração com a EPIC;
+- Utilização sem necessidade de criar uma STEAM API KEY por usuário;
+- Possível integração com a EPIC Games;
 
 ## Tecnologias Utilizadas
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original-wordmark.svg" width="40" height="40"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg" width="40" height="40"/>
