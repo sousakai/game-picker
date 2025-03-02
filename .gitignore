@@ -1,0 +1,18 @@
+# Ignorar arquivos de configuração sensíveis
+.env
+
+# Ignorar arquivos de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar pastas de configuração de IDEs populares
+.vscode/
+.idea/
+
+# Ignorar o arquivo de configuração do Jupyter Notebook (caso tenha usado)
+.ipynb_checkpoints/
+
+# Outros arquivos que você não deseja versionar
+*.log
