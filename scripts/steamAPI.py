@@ -4,7 +4,7 @@ import random
 import re
 import os
 from dotenv import load_dotenv
-from db import inserir_jogo
+from db_steam import inserir_jogo
 
 load_dotenv()  # Carrega as variáveis do arquivo .env
 
@@ -57,7 +57,7 @@ def obter_nome_jogo(appid):
         return None
 
 def obter_jogos_steam(STEAM_ID):
-    conn = sqlite3.connect('info_jogos.db')  # conecta com o banco de dados
+    conn = sqlite3.connect('jogos_steam.db')  # conecta com o banco de dados
     cursor = conn.cursor()  # cria cursor para sql
     
     url = f"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={STEAM_API_KEY}&steamid={STEAM_ID}&format=json"
@@ -98,14 +98,14 @@ def obter_jogos_steam(STEAM_ID):
         print("Erro ao obter dados da API")
 
 def escolher_jogo():
-    conn = sqlite3.connect('info_jogos.db')
+    conn = sqlite3.connect('jogos_steam.db')
     cursor = conn.cursor()
     
-    cursor.execute('SELECT COUNT(*) FROM info_jogos')  # conta quantos jogos existem na tabela
+    cursor.execute('SELECT COUNT(*) FROM jogos_steam')  # conta quantos jogos existem na tabela
     count = cursor.fetchone()[0]  # pega o resultado da contagem
     
     if count > 0:  
-        cursor.execute('SELECT * FROM info_jogos')  
+        cursor.execute('SELECT * FROM jogos_steam')  
         jogos = cursor.fetchall()
         jogo_aleatorio = random.choice(jogos)  
         return jogo_aleatorio

@@ -2,14 +2,14 @@ import sqlite3
 import random
 
 # conn = função criada para se conectar ao banco sqlite3. Se não houver o arquivo, ele criará.
-conn = sqlite3.connect('info_jogos.db')
+conn = sqlite3.connect('jogos_steam.db')
 cursor = conn.cursor()
 
 def criar_tabela():
  
     # TODO: ADICIONAR GÊNERO DO JOGO 
     cursor.execute(''' 
-        CREATE TABLE IF NOT EXISTS info_jogos (  
+        CREATE TABLE IF NOT EXISTS jogos_steam (  
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             appid INTEGER UNIQUE,
             nome TEXT,
@@ -20,14 +20,14 @@ def criar_tabela():
     conn.commit()  # confirma o comando
 
 def inserir_jogo(nome_jogo, horas_jogadas, appid):
-    cursor.execute('''SELECT * FROM info_jogos WHERE nome = ?''', (nome_jogo,))
+    cursor.execute('''SELECT * FROM jogos_steam WHERE nome = ?''', (nome_jogo,))
     jogo_existente = cursor.fetchone()  # fetchone: guarda o resultado da query sql em tupla, individualmente
     
     if jogo_existente:
         print(f"O jogo {nome_jogo} já está cadastrado.")
     else:
         cursor.execute(''' 
-            INSERT INTO info_jogos (nome, horas_jogadas, appid)
+            INSERT INTO jogos_steam (nome, horas_jogadas, appid)
             VALUES(?, ?, ?)
         ''', (nome_jogo, horas_jogadas, appid))
         print("Jogo inserido com sucesso.")
@@ -35,12 +35,12 @@ def inserir_jogo(nome_jogo, horas_jogadas, appid):
     conn.commit()  # confirma o comando
 
 def listar_jogos():
-    cursor.execute("SELECT id, nome, horas_jogadas FROM info_jogos")  # Especificando as colunas
+    cursor.execute("SELECT id, nome, horas_jogadas FROM jogos_steam")  # Especificando as colunas
     jogos = cursor.fetchall()
     return jogos
 
 def excluir_tabela():
-    cursor.execute("DROP TABLE IF EXISTS info_jogos")  
+    cursor.execute("DROP TABLE IF EXISTS jogos_steam")  
     conn.commit()  # Confirma a transação
     print("Tabela excluída com sucesso.")
     
@@ -49,10 +49,10 @@ def excluir_tabela():
 
 ## TESTES / UTILIDADES PARA O BD
 
-#def main():
-    #excluir_tabela()  # Exclui a tabela para rodar o código tranquilo, sem criar várias iterações do mesmo game
-    #criar_tabela()  
-    #listar_jogos()  
+def main():
+    excluir_tabela()  # Exclui a tabela para rodar o código tranquilo, sem criar várias iterações do mesmo game
+    criar_tabela()  
+    listar_jogos()  
 
     
     ## teste do codigo: 

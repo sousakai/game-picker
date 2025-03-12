@@ -3,10 +3,10 @@ import sqlite3
 
 
 def verificar_banco_vazio():
-    conn = sqlite3.connect('info_jogos.db')  # conexão bd
+    conn = sqlite3.connect('jogos_steam.db')  # conexão bd
     cursor = conn.cursor()  #cursor bd
     
-    cursor.execute('SELECT COUNT(*) FROM info_jogos')  # Conta o número de registros na tabela
+    cursor.execute('SELECT COUNT(*) FROM jogos_steam')  # Conta o número de registros na tabela
     resultado = cursor.fetchone()  # Obtém o resultado da contagem
     
     conn.close()  # Fecha a conexão com o banco
